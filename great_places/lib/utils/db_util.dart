@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
-import 'package:sqflite/sqlite_api.dart';
 
 class DbUtil {
   static Future<sql.Database> database() async {
@@ -9,7 +8,7 @@ class DbUtil {
       path.join(dbPath, 'places.db'),
       onCreate: (db, version) {
         return db.execute(
-            'create table PLACES (ID text primary key,TITLE text,IMAGE text)');
+            'CREATE TABLE places (id TEXT PRIMARY KEY, title TEXT, image TEXT)');
       },
       version: 1,
     );
@@ -20,7 +19,7 @@ class DbUtil {
     await db.insert(
       table,
       data,
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      conflictAlgorithm: sql.ConflictAlgorithm.replace,
     );
   }
 

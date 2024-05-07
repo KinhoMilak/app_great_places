@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 
-class locationInput extends StatefulWidget {
-  const locationInput({super.key});
-
+class LocationInput extends StatefulWidget {
   @override
-  State<locationInput> createState() => _locationInputState();
+  _LocationInputState createState() => _LocationInputState();
 }
 
-class _locationInputState extends State<locationInput> {
+class _LocationInputState extends State<LocationInput> {
   String? _previewImageUrl;
+
+  Future<void> _getCurrentUserLocation() async {
+    final locData = await Location().getLocation();
+    print(locData.latitude);
+    print(locData.longitude);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +30,7 @@ class _locationInputState extends State<locationInput> {
             ),
           ),
           child: _previewImageUrl == null
-              ? Text('Localização nao informada')
+              ? Text('Localização não informada!')
               : Image.network(
                   _previewImageUrl!,
                   fit: BoxFit.cover,
@@ -37,11 +43,11 @@ class _locationInputState extends State<locationInput> {
             TextButton.icon(
               icon: Icon(Icons.location_on),
               label: Text('Localização atual'),
-              onPressed: () {},
+              onPressed: _getCurrentUserLocation,
             ),
             TextButton.icon(
               icon: Icon(Icons.map),
-              label: Text('Seleione o mapa '),
+              label: Text('Selecione no Mapa'),
               onPressed: () {},
             ),
           ],
